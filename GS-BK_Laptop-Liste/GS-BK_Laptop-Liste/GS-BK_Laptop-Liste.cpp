@@ -1,21 +1,26 @@
-// GS-BK_Laptop-Liste.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+/*
+						SAE Projekt
 
+		Name: René Lohrer
+		Fachrichtung: SAE
+		Entwicklungsumgebungen:
+								Visual Studio 2017
+								Visual Studio Code
+		Kurze Beschreibung:
+							Dies ist ein kleines Projeckt bei dem es sich um eine Art Laptop Buchungs Software geht.
+							Hierbei ist es möglich Laptops anzulegen und zu "buchen".
+							Die Idee kam mir da wir im Unternehmen eine Excel Liste haben die genau dies tut,
+							hierbei wird es den Auszubildenden ohne Laptop ermöglicht einen Laptop auszuleihen.
+		Source Code und weitere Informationen:
+											  https://github.com/TheShadowPlayer/GS-BK_Laptop-Liste/
+*/
 #include "pch.h"
 #include <iostream>
+#include <cmath>
+#include "string.h"
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	cout << "Hello World!\n";
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
