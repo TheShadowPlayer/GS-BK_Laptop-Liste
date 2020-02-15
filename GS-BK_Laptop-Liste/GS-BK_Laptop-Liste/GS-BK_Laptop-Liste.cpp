@@ -14,6 +14,18 @@
 		Source Code und weitere Informationen:
 											  https://github.com/TheShadowPlayer/GS-BK_Laptop-Liste/
 */
+
+
+/*
+Einbinden von Systembibliotheken
+Folgende werden verwendet:
+	- pch.h | Hier werden "pre-compiled headers" in das Program Eingebunden
+	- iostream | Hier sind die Ein- und Ausgabe-Funktionen von C++ enthalten
+	- cmath | Fügt mehrere Datentypen der Standartbibliothek ein
+	- string.h | Fügt verschiedene Mehtoden für "string" ein
+	- using namespace std | Hier werden die befehle vereinfacht, das man statt std::cout nur noch cout machen muss
+
+*/
 #include "pch.h"
 #include <iostream>
 #include <cmath>
