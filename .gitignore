@@ -32,3 +32,8 @@
 *.app
 /GS-BK_Laptop-Liste/.vs/GS-BK_Laptop-Liste/v15
 /GS-BK_Laptop-Liste/GS-BK_Laptop-Liste/Debug
+/.vs
+/GS-BK_Laptop-Liste/.vs/GS-BK_Laptop-Liste/v16
+/GS-BK_Laptop-Liste/Debug
+/GS-BK_Laptop-Liste/GS-BK_Laptop-Liste/x64/Debug
+/GS-BK_Laptop-Liste/x64/Debug
