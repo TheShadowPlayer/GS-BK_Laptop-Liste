@@ -3,6 +3,7 @@
 
 		Name: René Lohrer
 		Fachrichtung: SAE
+		Lehrer: Herr Röhrl
 		Entwicklungsumgebungen:
 								Visual Studio 2017
 								Visual Studio 2019
