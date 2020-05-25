@@ -166,7 +166,7 @@ int main()
 			objekteLoeschen(list);
 			delete list;
 			list = NULL;
-			cout << "Alle Objekte gelöscht!" << endl;
+			cout << "Alle Objekte geloescht!" << endl;
 			system("PAUSE");
 			break;
 		default:
