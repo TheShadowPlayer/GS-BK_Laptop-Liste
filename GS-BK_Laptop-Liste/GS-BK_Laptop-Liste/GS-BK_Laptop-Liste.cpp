@@ -13,7 +13,6 @@
 							hierbei wird es den Auszubildenden ohne Laptop ermöglicht einen Laptop auszuleihen.
 		Funtkionalitäten der Anwendung:
 									  - Hinzufügen von Laptops
-									  - Hinzufügen von Zubehör
 									  - Buchen der Laptops
 									  - Buchungen Stornieren
 									  - Ausgeben aller Laptops mit dem Aktuellen Status
@@ -152,16 +151,12 @@ int main()
 			system("PAUSE");
 			break;
 		case 3:
-			// TODO: Zubehoer anlegen
-			system("PAUSE");
-			break;
-		case 4:
 			cout << "Bitte geben Sie den Namen des Objektes ein: ";
 			cin >> name;
 			objektBuchen(list, name);
 			system("PAUSE");
 			break;
-		case 5:
+		case 4:
 			cout << "Bitte geben Sie den Namen des Objektes ein: ";
 			cin >> name;
 			objektStonieren(list, name);
@@ -204,9 +199,8 @@ void AusgabeMenue()
 	cout << "|                                         |" << endl;
 	cout << "|       1 - Alle Objekte anzeigen         |" << endl;
 	cout << "|       2 - Neuen Laptop anlegen          |" << endl;
-	cout << "|       3 - Neues Zubehoer anlegen        |" << endl;
-	cout << "|       4 - Objekt buchen                 |" << endl;
-	cout << "|       5 - Objekt Stonieren              |" << endl;
+	cout << "|       3 - Objekt buchen                 |" << endl;
+	cout << "|       4 - Objekt Stonieren              |" << endl;
 	cout << "|       9 - Objekt loeschen               |" << endl;
 	cout << "|                                         |" << endl;
 	cout << "|       0 - Program beenden               |" << endl;
