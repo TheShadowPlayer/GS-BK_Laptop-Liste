@@ -83,6 +83,10 @@ public:
 	- AusgabeHeader | Hier wird die Ausgabe des Standart Header der Anwendung
 	- AusgabeMenue | Hier wird die Ausgabe des Hauptmenues
 	- AusgabeObjekte | Hier wird die Ausgabe aller Objekte geregelt
+	- addListenElement | Element wird an der Liste hinzugefügt
+	- objektBuchen | Hier wird das Objekt gesucht und auf gebucht gestellt
+	- objektStonieren | Hier wird das Objekt gesucht und die Buchung entfernt
+	- objekteLoeschen | Hier werden alle Objekte gelöscht
 */
 
 void AusgabeHeader();
@@ -164,7 +168,6 @@ int main()
 			break;
 		case 9:
 			objekteLoeschen(list);
-			delete list;
 			list = NULL;
 			cout << "Alle Objekte geloescht!" << endl;
 			system("PAUSE");
@@ -281,6 +284,7 @@ void objekteLoeschen(Objekt* first) {
 		ptr->next = NULL;
 		ptr = first;
 	}
+	delete first;
 }
 
 Objekt::Objekt(char name[], int type)
