@@ -17,7 +17,6 @@
 									  - Buchen der Laptops
 									  - Buchungen Stornieren
 									  - Ausgeben aller Laptops mit dem Aktuellen Status
-									  - Suchen eines Laptops / Anzeige eines Laptops mit Status
 									  - Entfernen von Laptops
 									  - Entfernen von Zubehör
 		Source Code und weitere Informationen:
@@ -35,6 +34,7 @@ Folgende werden verwendet:
 	- string.h | Fügt verschiedene Mehtoden für "string" ein
 	- using namespace std | Hier werden die befehle vereinfacht, das man statt std::cout nur noch cout machen muss
 */
+
 #include "pch.h"
 #include <iostream>
 #include <cmath>
@@ -43,32 +43,15 @@ Folgende werden verwendet:
 using namespace std;
 
 /*
-	Deklarationen von Methoden
-
-	Name der Methode | Funktion der Methode
-	- AusgabeHeader | Hier wird die Ausgabe des Standart Header der Anwendung
-	- AusgabeMenue | Hier wird die Ausgabe des Hauptmenues
-*/
-
-void AusgabeHeader();
-void AusgabeMenue();
-
-
-/*
 	Daklaration von Klassen
-
-	Name der Klasse | Beschreibung der Klasse
 */
-
 class Objekt {
 private:
 	char name[20];
 	int type;
-	char bucher[20];
+	char bucher[100];
 	bool gebucht;
 protected:
-
-
 	char* getName() { return name; };
 	int getType() { return type; };
 	char* getBucher() { return bucher; };
@@ -76,7 +59,8 @@ protected:
 public:
 	Objekt(char name[], int type);
 	virtual void print() {};
-	bool buchen(char bucher[10]);
+	bool buchen(char bucher[100]);
+	Objekt* next;
 };
 
 class Laptop : public Objekt {
@@ -93,6 +77,19 @@ public:
 	void print();
 };
 
+/*
+	Deklarationen von Methoden
+
+	Name der Methode | Funktion der Methode
+	- AusgabeHeader | Hier wird die Ausgabe des Standart Header der Anwendung
+	- AusgabeMenue | Hier wird die Ausgabe des Hauptmenues
+	- AusgabeObjekte | Hier wird die Ausgabe aller Objekte geregelt
+*/
+
+void AusgabeHeader();
+void AusgabeMenue();
+void AusgabeObjekte(Objekt* obj);
+void addListenElement(Objekt* obj, Objekt* objekt);
 
 /*
 
@@ -101,13 +98,56 @@ public:
 */
 int main()
 {
-	AusgabeHeader();
-	AusgabeMenue();
+	int auswahl = 404;
+	Objekt* list = NULL;
 	char test[] = "test";
 	char hp[] = "HP";
 	char model[] = "ZBook 1";
 	Objekt* testObj = new Laptop(test, hp, model, 1000, 696969, 69.69, 187.69);
-	testObj->print();
+	list = testObj;
+
+
+
+	while (auswahl > 0) {
+		system("cls");
+
+		AusgabeHeader();
+		AusgabeMenue();
+		cin >> auswahl;
+		switch (auswahl)
+		{
+		case 1:
+			AusgabeObjekte(list);
+			system("PAUSE");
+			break;
+		case 2:
+			// TODO: Laptop anlegen
+			system("PAUSE");
+			break;
+		case 3:
+			// TODO: Zubehoer anlegen
+			system("PAUSE");
+			break;
+		case 4:
+			// TODO: Objekt buchen
+			system("PAUSE");
+			break;
+		case 5:
+			// TODO: Objekt stonieren
+			system("PAUSE");
+			break;
+		case 9:
+			// TODO: Objekt löschen
+			system("PAUSE");
+			break;
+		default:
+			break;
+		}
+	}
+
+
+	
+
 	system("PAUSE");
 	return 0;
 }
@@ -130,7 +170,41 @@ void AusgabeHeader()
 
 void AusgabeMenue()
 {
+	cout << "|                                         |" << endl;
+	cout << "|                  Menue                  |" << endl;
+	cout << "|                                         |" << endl;
+	cout << "|       1 - Alle Objekte anzeigen         |" << endl;
+	cout << "|       2 - Neuen Laptop anlegen          |" << endl;
+	cout << "|       3 - Neues Zubehoer anlegen        |" << endl;
+	cout << "|       4 - Objekt buchen                 |" << endl;
+	cout << "|       5 - Objekt Stonieren              |" << endl;
+	cout << "|       9 - Objekt loeschen               |" << endl;
+	cout << "|                                         |" << endl;
+	cout << "|       0 - Program beenden               |" << endl;
+	cout << "|                                         |" << endl;
+	cout << "+-----------------------------------------+" << endl;
+	cout << "Ihre Auswahl: ";
+}
 
+void AusgabeObjekte(Objekt* obj)
+{
+	Objekt* current = obj;
+	cout << "+-----------------------------------------+" << endl;
+	while (current != NULL) {
+		current->print();
+		current = current->next;
+		cout << "+-----------------------------------------+" << endl;
+	}
+}
+
+void addListenElement(Objekt* obj, Objekt* objekt) {
+	Objekt* last = obj;
+	while (last->next != NULL)
+	{
+		last = last->next;
+	}
+	last->next = objekt;
+	last = last->next;
 }
 
 Objekt::Objekt(char name[], int type)
@@ -139,9 +213,10 @@ Objekt::Objekt(char name[], int type)
 	Objekt::type = type;
 	strcpy_s(Objekt::bucher, "");
 	Objekt::gebucht = false;
+	Objekt::next = NULL;
 }
 
-bool Objekt::buchen(char bucher[10])
+bool Objekt::buchen(char bucher[100])
 {
 	if (!Objekt::gebucht) {
 		strcpy_s(Objekt::bucher, bucher);
@@ -168,5 +243,18 @@ Laptop::~Laptop()
 
 void Laptop::print()
 {
-	cout << Laptop::getType() << " - " << Laptop::getName() << " - [" << Laptop::hersteller << ", " << Laptop::model << ", " << Laptop::prozessorKerne << ", " << Laptop::prozessorThreads << ", " << Laptop::prozessorTakt << ", " << Laptop::arbeitsspeicher << "]" << endl;
+	cout << "Type: Laptop" << endl;
+	cout << "Name: " << Laptop::getName() << endl;
+	cout << "Hersteller: " << Laptop::hersteller << endl;
+	cout << "Model: " << Laptop::model << endl;
+	cout << "Kerne | Threads | Takt" << endl;
+	cout << Laptop::prozessorKerne << " | " << Laptop::prozessorThreads << " | " << Laptop::prozessorTakt << endl;
+	cout << "Arbeitsspeicher: " << Laptop::arbeitsspeicher << "GB" << endl << endl;
+
+	if (Laptop::getStatus()) {
+		cout << "Status: " << "Gebucht von " << Laptop::getBucher() << endl;
+	}
+	else {
+		cout << "Status: " << "Frei" << endl;
+	}
 }
