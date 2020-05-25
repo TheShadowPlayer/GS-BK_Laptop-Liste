@@ -17,8 +17,7 @@
 									  - Buchen der Laptops
 									  - Buchungen Stornieren
 									  - Ausgeben aller Laptops mit dem Aktuellen Status
-									  - Entfernen von Laptops
-									  - Entfernen von Zubehör
+									  - Entfernen aller Objekte
 		Source Code und weitere Informationen:
 											  https://github.com/TheShadowPlayer/GS-BK_Laptop-Liste/
 */
@@ -47,16 +46,16 @@ using namespace std;
 */
 class Objekt {
 private:
-	char name[20];
+	char name[100];
 	int type;
 	char bucher[100];
 	bool gebucht;
 protected:
-	char* getName() { return name; };
 	int getType() { return type; };
 	char* getBucher() { return bucher; };
-	bool getStatus() { return gebucht; };
 public:
+	bool getStatus() { return gebucht; };
+	char* getName() { return name; };
 	Objekt(char name[], int type);
 	virtual void print() {};
 	bool buchen(char bucher[100]);
@@ -65,8 +64,8 @@ public:
 
 class Laptop : public Objekt {
 private:
-	char hersteller[20];
-	char model[20];
+	char hersteller[100];
+	char model[100];
 	int prozessorKerne;
 	int prozessorThreads;
 	double prozessorTakt;
@@ -88,8 +87,9 @@ public:
 
 void AusgabeHeader();
 void AusgabeMenue();
-void AusgabeObjekte(Objekt* obj);
-void addListenElement(Objekt* obj, Objekt* objekt);
+void AusgabeObjekte(Objekt* first);
+void addListenElement(Objekt* first, Objekt* objekt);
+void objektBuchen(Objekt* first, char name[]);
 
 /*
 
@@ -100,13 +100,15 @@ int main()
 {
 	int auswahl = 404;
 	Objekt* list = NULL;
-	char test[] = "test";
-	char hp[] = "HP";
-	char model[] = "ZBook 1";
-	Objekt* testObj = new Laptop(test, hp, model, 1000, 696969, 69.69, 187.69);
-	list = testObj;
 
-
+	char name[100];
+	char hersteller[100];
+	char model[100];
+	int kerne;
+	int threads;
+	double takt;
+	double ram;
+	Objekt* laptop;
 
 	while (auswahl > 0) {
 		system("cls");
@@ -121,7 +123,29 @@ int main()
 			system("PAUSE");
 			break;
 		case 2:
-			// TODO: Laptop anlegen
+			cout << "Bitte geben sie den Namen des Laptops ein: ";
+			cin >> name;
+			cout << "Bitte geben Sie den Hersteller ein: ";
+			cin >> hersteller;
+			cout << "Bitte geben Sie das Model an: ";
+			cin >> model;
+			cout << "Bitte geben Sie die Kerne des Prozessors an: ";
+			cin >> kerne;
+			cout << "Bitte geben sie die Threads des Prozessors an: ";
+			cin >> threads;
+			cout << "Bitte geben sie den Takt des Prozessors in GHz an (Beispiel: 3.5): ";
+			cin >> takt;
+			cout << "Bitte geben Sie den Arbeitsspeicher in GB an (Beispiel: 16.5): ";
+			cin >> ram;
+
+			laptop = new Laptop(name, hersteller, model, kerne, threads, takt, ram);
+			if (list == NULL) {
+				list = laptop;
+			}
+			else {
+				addListenElement(list, laptop);
+			}
+			cout << "Laptop wurde angelegt!";
 			system("PAUSE");
 			break;
 		case 3:
@@ -129,7 +153,9 @@ int main()
 			system("PAUSE");
 			break;
 		case 4:
-			// TODO: Objekt buchen
+			cout << "Bitte geben Sie den Namen des Objektes ein: ";
+			cin >> name;
+			objektBuchen(list, name);
 			system("PAUSE");
 			break;
 		case 5:
@@ -137,7 +163,7 @@ int main()
 			system("PAUSE");
 			break;
 		case 9:
-			// TODO: Objekt löschen
+			// TODO: Objekte löschen
 			system("PAUSE");
 			break;
 		default:
@@ -157,7 +183,6 @@ int main()
 	Definition der Methode
 
 */
-
 void AusgabeHeader()
 {
 	cout << "+-----------------------------------------+" << endl;
@@ -205,6 +230,28 @@ void addListenElement(Objekt* obj, Objekt* objekt) {
 	}
 	last->next = objekt;
 	last = last->next;
+}
+
+void objektBuchen(Objekt* first, char name[]) {
+	Objekt* ptr = first;
+	while (ptr != NULL) {
+		if (!strcmp(ptr->getName(), name)) {
+			if (!ptr->getStatus()) {
+				cout << "Bitte geben Sie den Namen vom Bucher ein: ";
+				char bucher[100];
+				cin >> bucher;
+				ptr->buchen(bucher);
+			}
+			else {
+				cout << "Objekt ist bereits gebucht!" << endl;
+			}
+			return;
+		}
+		ptr = ptr->next;
+	}
+	cout << "Objekt konnte nicht gefunden werden!";
+	return;
+	
 }
 
 Objekt::Objekt(char name[], int type)
