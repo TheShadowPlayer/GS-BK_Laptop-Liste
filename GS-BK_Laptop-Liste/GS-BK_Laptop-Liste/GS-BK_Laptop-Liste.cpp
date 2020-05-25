@@ -59,6 +59,7 @@ public:
 	Objekt(char name[], int type);
 	virtual void print() {};
 	bool buchen(char bucher[100]);
+	bool stonieren();
 	Objekt* next;
 };
 
@@ -90,6 +91,8 @@ void AusgabeMenue();
 void AusgabeObjekte(Objekt* first);
 void addListenElement(Objekt* first, Objekt* objekt);
 void objektBuchen(Objekt* first, char name[]);
+void objektStonieren(Objekt* first, char name[]);
+void objekteLoeschen(Objekt* first);
 
 /*
 
@@ -159,21 +162,22 @@ int main()
 			system("PAUSE");
 			break;
 		case 5:
-			// TODO: Objekt stonieren
+			cout << "Bitte geben Sie den Namen des Objektes ein: ";
+			cin >> name;
+			objektStonieren(list, name);
 			system("PAUSE");
 			break;
 		case 9:
-			// TODO: Objekte löschen
+			objekteLoeschen(list);
+			delete list;
+			list = NULL;
+			cout << "Alle Objekte gelöscht!" << endl;
 			system("PAUSE");
 			break;
 		default:
 			break;
 		}
 	}
-
-
-	
-
 	system("PAUSE");
 	return 0;
 }
@@ -249,9 +253,40 @@ void objektBuchen(Objekt* first, char name[]) {
 		}
 		ptr = ptr->next;
 	}
+	cout << "Objekt konnte nicht gefunden werden!"<< endl;
+	return;
+}
+
+void objektStonieren(Objekt* first, char name[]) {
+	Objekt* ptr = first;
+	while (ptr != NULL) {
+		if (!strcmp(ptr->getName(), name)) {
+			if (ptr->getStatus()) {
+				ptr->stonieren();
+				cout << "Objekt wurde erfolgreich storniert!" << endl;
+				return;
+			}
+			else {
+				cout << "Objekt ist nicht gebucht!" << endl;
+			}
+			return;
+		}
+		ptr = ptr->next;
+	}
 	cout << "Objekt konnte nicht gefunden werden!";
 	return;
-	
+}
+
+void objekteLoeschen(Objekt* first) {
+	Objekt* ptr = first;
+	while (first->next != NULL) {
+		while (ptr->next->next != NULL) {
+			ptr = ptr->next;
+		}
+		delete ptr->next;
+		ptr->next = NULL;
+		ptr = first;
+	}
 }
 
 Objekt::Objekt(char name[], int type)
@@ -268,6 +303,15 @@ bool Objekt::buchen(char bucher[100])
 	if (!Objekt::gebucht) {
 		strcpy_s(Objekt::bucher, bucher);
 		Objekt::gebucht = true;
+		return true;
+	}
+	return false;
+}
+
+bool Objekt::stonieren()
+{
+	if (Objekt::getStatus()) {
+		Objekt::gebucht = false;
 		return true;
 	}
 	return false;
